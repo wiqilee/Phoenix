@@ -14,7 +14,7 @@
 
 **Built by [Wiqi Lee](https://x.com/wiqi_lee) for the Google Cloud Rapid Agent Hackathon 2026**
 
-[🎬 Demo Video](https://youtu.be/dQw4w9WgXcQ) · [🚀 Live Demo](https://phoenix.run.app) · [📖 Architecture](./docs/ARCHITECTURE.md) · [🐦 Twitter/X](https://x.com/wiqi_lee)
+[🎬 Demo Video](https://youtu.be/dQw4w9WgXcQ) · [🚀 Live Demo](https://phoenix.run.app) · [📖 Architecture](./docs/ARCHITECTURE.md) · [![X](https://img.shields.io/badge/@wiqi__lee-000000?logo=x&logoColor=white&style=flat)](https://x.com/wiqi_lee)
 
 </div>
 
@@ -610,7 +610,7 @@ Special thanks to the Google Cloud Partnerships team for running this hackathon 
 
 Made with caffeine and conviction by [Wiqi Lee](https://x.com/wiqi_lee)
 
-[![X](https://img.shields.io/badge/X-@wiqi__lee-000000?logo=x&logoColor=white&style=flat)](https://x.com/wiqi_lee)
+[![X](https://img.shields.io/badge/@wiqi__lee-000000?logo=x&logoColor=white&style=flat)](https://x.com/wiqi_lee)
 [![YouTube](https://img.shields.io/badge/YouTube-Demo-FF0000?logo=youtube&logoColor=white&style=flat)](https://youtu.be/dQw4w9WgXcQ)
 [![Devpost](https://img.shields.io/badge/Devpost-phoenix--g5eqpj-003E54?logo=devpost&logoColor=white&style=flat)](https://devpost.com/software/phoenix-g5eqpj)
 
