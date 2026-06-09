@@ -557,7 +557,7 @@ This creates a demo repository in your GitLab account with intentionally broken 
 **Devpost:** [rapid-agent.devpost.com](https://devpost.com/software/phoenix-g5eqpj)
 **Demo video:** [https://youtu.be/dQw4w9WgXcQ](https://youtu.be/dQw4w9WgXcQ)
 **Live demo:** [https://phoenix.run.app](https://phoenix.run.app)
-**GitHub:** [github.com/wiqi-lee/phoenix](https://github.com/wiqi-lee/phoenix)
+**GitHub:** [github.com/wiqi-lee/phoenix](https://github.com/wiqi-lee/Phoenix)
 
 ### Required components checklist
 
