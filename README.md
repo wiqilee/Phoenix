@@ -40,7 +40,6 @@
 - [📜 Hackathon Compliance](#-hackathon-compliance)
 - [🎥 Demo](#-demo)
 - [📤 Submission Details](#-submission-details)
-- [🗺 Roadmap](#-roadmap)
 - [👤 Author](#-author)
 - [📜 License](#-license)
 - [🙏 Acknowledgements](#-acknowledgements)
