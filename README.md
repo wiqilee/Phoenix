@@ -523,7 +523,7 @@ Phoenix is built specifically to satisfy every requirement of the Google Cloud R
 | **No competing orchestrators** | Phoenix uses ADK's `SequentialAgent`, `LlmAgent`, and `FunctionTool` directly. FastAPI is used only as an HTTP transport for webhook intake, not for agent orchestration |
 | **Runs on web platform** | The React dashboard runs in a browser and is served from Cloud Run |
 | **Open source with detectable license** | MIT License file at the repository root |
-| **Public repository** | Available at [github.com/wiqi-lee/Phoenix](https://github.com/wiqi-lee/Phoenix) |
+| **Public repository** | Available at [github.com/wiqilee/Phoenix](https://github.com/wiqilee/Phoenix) |
 | **Demo video under 3 minutes** | [Available on YouTube](https://youtu.be/dQw4w9WgXcQ) |
 
 ---
@@ -557,7 +557,7 @@ This creates a demo repository in your GitLab account with intentionally broken 
 **Devpost:** [rapid-agent.devpost.com](https://devpost.com/software/phoenix-g5eqpj)
 **Demo video:** [https://youtu.be/dQw4w9WgXcQ](https://youtu.be/dQw4w9WgXcQ)
 **Live demo:** [https://phoenix.run.app](https://phoenix.run.app)
-**GitHub:** [github.com/wiqi-lee/phoenix](https://github.com/wiqi-lee/Phoenix)
+**GitHub:** [github.com/wiqilee/Phoenix](https://github.com/wiqilee/Phoenix)
 
 ### Required components checklist
 
