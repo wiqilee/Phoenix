@@ -575,17 +575,6 @@ See [`docs/SUBMISSION.md`](./docs/SUBMISSION.md) for the full Devpost descriptio
 
 ---
 
-## 🗺 Roadmap
-
-- ✅ **v0.1 (Hackathon submission)** — Four strategies, single repo, GitLab only
-- ⏳ **v0.2** — GitHub Actions adapter, Jenkins adapter
-- ⏳ **v0.3** — Database migration rollback, Terraform plan recovery
-- ⏳ **v1.0** — Cross repository memory, organization wide learning
-- ⏳ **v2.0** — Proactive mode, predictive failure detection
-- ⏳ **v3.0** — Self improvement through long term outcome grading
-
----
-
 ## 👤 Author
 
 **Wiqi Lee**
