@@ -1,0 +1,115 @@
+# ==============================================================================
+# Phoenix - Local Development Stack
+# ==============================================================================
+# Brings up all 5 services for local development.
+# Run with: make dev
+# ==============================================================================
+
+services:
+  # ----- Frontend Dashboard -----
+  web:
+    build:
+      context: ./apps/web
+      dockerfile: Dockerfile
+    container_name: phoenix-web
+    ports:
+      - "5173:5173"
+    environment:
+      - VITE_GATEWAY_URL=http://localhost:8080
+      - VITE_WS_URL=ws://localhost:8080/ws
+    volumes:
+      - ./apps/web/src:/app/src
+      - ./apps/web/public:/app/public
+    depends_on:
+      - gateway
+    networks:
+      - phoenix-net
+
+  # ----- API Gateway (Go Fiber) -----
+  gateway:
+    build:
+      context: ./apps/gateway
+      dockerfile: Dockerfile
+    container_name: phoenix-gateway
+    ports:
+      - "8080:8080"
+    environment:
+      - GATEWAY_PORT=8080
+      - AGENT_URL=http://agent:8000
+      - GITLAB_WEBHOOK_SECRET=${GITLAB_WEBHOOK_SECRET}
+      - LOG_LEVEL=${LOG_LEVEL:-INFO}
+    depends_on:
+      - agent
+    networks:
+      - phoenix-net
+
+  # ----- Agent Orchestrator (Python + Gemini) -----
+  agent:
+    build:
+      context: ./apps/agent
+      dockerfile: Dockerfile
+    container_name: phoenix-agent
+    ports:
+      - "8000:8000"
+    environment:
+      - GCP_PROJECT_ID=${GCP_PROJECT_ID}
+      - GCP_REGION=${GCP_REGION:-us-central1}
+      - GEMINI_MODEL=${GEMINI_MODEL:-gemini-3-flash}
+      - GITLAB_TOKEN=${GITLAB_TOKEN}
+      - GITLAB_BASE_URL=${GITLAB_BASE_URL:-https://gitlab.com}
+      - PARSER_URL=http://parser:8001
+      - AGENT_CONFIDENCE_THRESHOLD=${AGENT_CONFIDENCE_THRESHOLD:-0.7}
+      - MAX_RETRY_STRATEGIES=${MAX_RETRY_STRATEGIES:-3}
+      - LOG_LEVEL=${LOG_LEVEL:-INFO}
+      - GOOGLE_APPLICATION_CREDENTIALS=/secrets/service-account.json
+    volumes:
+      - ./secrets:/secrets:ro
+      - ./apps/agent/src:/app/src
+    depends_on:
+      - parser
+    networks:
+      - phoenix-net
+
+  # ----- Log Parser (Rust) -----
+  parser:
+    build:
+      context: ./apps/parser
+      dockerfile: Dockerfile
+    container_name: phoenix-parser
+    ports:
+      - "8001:8001"
+    environment:
+      - PARSER_PORT=8001
+      - RUST_LOG=info
+    networks:
+      - phoenix-net
+
+  # ----- Sandbox Runner (Python) -----
+  runner:
+    build:
+      context: ./apps/runner
+      dockerfile: Dockerfile
+    container_name: phoenix-runner
+    ports:
+      - "8002:8002"
+    environment:
+      - LOG_LEVEL=${LOG_LEVEL:-INFO}
+    networks:
+      - phoenix-net
+
+  # ----- Firestore Emulator (for local dev only) -----
+  firestore:
+    image: google/cloud-sdk:latest
+    container_name: phoenix-firestore
+    ports:
+      - "8200:8200"
+    command: >
+      gcloud emulators firestore start
+      --host-port=0.0.0.0:8200
+      --project=phoenix-local
+    networks:
+      - phoenix-net
+
+networks:
+  phoenix-net:
+    driver: bridge
