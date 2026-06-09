@@ -3,8 +3,22 @@
 from __future__ import annotations
 
 from functools import lru_cache
+from pathlib import Path
 
 from pydantic_settings import BaseSettings, SettingsConfigDict
+
+
+def _find_env_file() -> str:
+    """Walk up from CWD to find the nearest .env file."""
+    current = Path.cwd()
+    for _ in range(6):  # don't climb forever
+        candidate = current / ".env"
+        if candidate.is_file():
+            return str(candidate)
+        if current.parent == current:
+            break
+        current = current.parent
+    return ".env"  # fallback
 
 
 class Settings(BaseSettings):
@@ -15,7 +29,6 @@ class Settings(BaseSettings):
     """
 
     model_config = SettingsConfigDict(
-        env_file=".env",
         env_file_encoding="utf-8",
         case_sensitive=False,
         extra="ignore",
@@ -52,7 +65,7 @@ class Settings(BaseSettings):
 @lru_cache
 def get_settings() -> Settings:
     """Get the singleton settings instance."""
-    return Settings()
+    return Settings(_env_file=_find_env_file())
 
 
 settings = get_settings()
