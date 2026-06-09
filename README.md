@@ -578,7 +578,7 @@ See [`docs/SUBMISSION.md`](./docs/SUBMISSION.md) for the full Devpost descriptio
 
 **Wiqi Lee**
 
-[![X](https://img.shields.io/badge/X-@wiqi__lee-000000?logo=x&logoColor=white)](https://x.com/wiqi_lee)
+[![X](https://img.shields.io/badge/@wiqi__lee-000000?logo=x&logoColor=white)](https://x.com/wiqi_lee)
 [![GitHub](https://img.shields.io/badge/GitHub-wiqi--lee-181717?logo=github&logoColor=white)](https://github.com/wiqi-lee)
 
 Built solo for the Google Cloud Rapid Agent Hackathon 2026. If you want to talk about Phoenix, agentic AI, or CI/CD automation, find me on X.
