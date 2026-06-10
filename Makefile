@@ -4,7 +4,7 @@
 # Run `make help` to see all available commands.
 # ==============================================================================
 
-.PHONY: help dev down build clean logs deploy seed test lint setup
+.PHONY: help dev adk down build clean logs deploy seed test lint setup
 .DEFAULT_GOAL := help
 
 # Colors
@@ -31,6 +31,10 @@ setup: ## First time setup - install local dependencies
 dev: ## Start all services locally with docker-compose
 	@echo "$(CYAN)Starting Phoenix services...$(RESET)"
 	docker-compose up --build
+
+adk: ## Open the ADK Dev UI to chat with the agent (http://127.0.0.1:8000)
+	@echo "$(CYAN)Launching ADK Dev UI... pick 'phoenix_agent' in the app dropdown.$(RESET)"
+	cd apps/agent/src && adk web
 
 dev-detached: ## Start services in background
 	docker-compose up --build -d

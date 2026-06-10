@@ -3,6 +3,10 @@
 __version__ = "0.1.0"
 __author__ = "Wiqi Lee"
 
-from phoenix_agent.adk_agents import phoenix_coordinator as root_agent
+# Expose the ADK entry point at package level.
+# `adk web` resolves `phoenix_agent.agent.root_agent` first and
+# `phoenix_agent.root_agent` as a fallback, so both paths work.
+from phoenix_agent import agent
+from phoenix_agent.agent import root_agent
 
-__all__ = ["root_agent"]
+__all__ = ["agent", "root_agent"]

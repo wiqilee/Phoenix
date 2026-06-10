@@ -5,7 +5,7 @@
 ### An autonomous multi-agent system that diagnoses and repairs broken GitLab CI/CD pipelines without human intervention.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Built with Gemini](https://img.shields.io/badge/Built%20with-Gemini%202.0-blue)](https://cloud.google.com/vertex-ai)
+[![Built with Gemini](https://img.shields.io/badge/Built%20with-Gemini%203-blue)](https://cloud.google.com/vertex-ai)
 [![Google ADK](https://img.shields.io/badge/Framework-Google%20ADK-34A853)](https://github.com/google/adk-python)
 [![Google Cloud](https://img.shields.io/badge/Powered%20by-Google%20Cloud-4285F4)](https://cloud.google.com)
 [![GitLab MCP](https://img.shields.io/badge/Integration-GitLab%20MCP-FC6D26)](https://docs.gitlab.com)
@@ -14,7 +14,7 @@
 
 **Built by [Wiqi Lee](https://x.com/wiqi_lee) for the Google Cloud Rapid Agent Hackathon 2026**
 
-[🎬 Demo Video](https://youtu.be/dQw4w9WgXcQ) · [🚀 Live Demo](https://phoenix.run.app) · [📖 Architecture](./docs/ARCHITECTURE.md) · [![X](https://img.shields.io/badge/@wiqi__lee-000000?logo=x&logoColor=white&style=flat)](https://x.com/wiqi_lee)
+[🎬 Demo Video](https://youtu.be/dQw4w9WgXcQ) · [🚀 Live Demo](https://phoenix-agent-1018198774070.us-central1.run.app) · [📖 Architecture](./docs/ARCHITECTURE.md) · [![X](https://img.shields.io/badge/@wiqi__lee-000000?logo=x&logoColor=white&style=flat)](https://x.com/wiqi_lee)
 
 </div>
 
@@ -446,8 +446,8 @@ You also need:
 ### One time setup
 
 ```bash
-git clone https://github.com/wiqi-lee/Phoenix.git
-cd phoenix
+git clone https://github.com/wiqilee/Phoenix.git
+cd Phoenix
 cp .env.example .env
 # Edit .env with your real values
 ./infra/scripts/setup-gcp.sh
@@ -462,6 +462,25 @@ make dev
 ```
 
 This brings up all services through `docker-compose`. The dashboard becomes available at **http://localhost:5173**.
+
+### Chat with the agent in the ADK Dev UI
+
+The fastest way to talk to the Phoenix agents directly (no webhook, no gateway) is the ADK developer UI:
+
+```bash
+cd apps/agent
+pip install -e ".[dev]"
+
+cd src
+adk web
+```
+
+Open **http://127.0.0.1:8000** and pick **`phoenix_agent`** in the app dropdown (or go straight to `/dev-ui/?app=phoenix_agent`). The Dev UI must be launched from `apps/agent/src` so ADK discovers the `phoenix_agent` package, where `phoenix_agent/agent.py` exposes `root_agent`.
+
+Two notes for local runs:
+
+- Gemini needs credentials. Put either `GOOGLE_API_KEY` (AI Studio) or the Vertex AI trio (`GOOGLE_GENAI_USE_VERTEXAI=TRUE`, `GOOGLE_CLOUD_PROJECT`, `GOOGLE_CLOUD_LOCATION`) in the root `.env`.
+- The GitLab MCP toolset performs an OAuth handshake on first use and requires GitLab Duo (Premium or Ultimate). To smoke test the agents without that, set `PHOENIX_DISABLE_MCP=1` in `.env` and Phoenix falls back to its REST tools.
 
 ### Deploy to Cloud Run
 
@@ -555,8 +574,9 @@ This creates a demo repository in your GitLab account with intentionally broken 
 **Hackathon:** Google Cloud Rapid Agent Hackathon, GitLab track
 **Devpost:** [rapid-agent.devpost.com](https://devpost.com/software/phoenix-g5eqpj)
 **Demo video:** [https://youtu.be/dQw4w9WgXcQ](https://youtu.be/dQw4w9WgXcQ)
-**Live demo:** [https://phoenix.run.app](https://phoenix.run.app)
+**Live demo (agent API):** [https://phoenix-agent-1018198774070.us-central1.run.app](https://phoenix-agent-1018198774070.us-central1.run.app) · interactive API docs at [/docs](https://phoenix-agent-1018198774070.us-central1.run.app/docs)
 **GitHub:** [github.com/wiqilee/Phoenix](https://github.com/wiqilee/Phoenix)
+**Dashboard:** run `make deploy` and the script prints the `phoenix-web` URL (format: `https://phoenix-web-1018198774070.us-central1.run.app`)
 
 ### Required components checklist
 
@@ -579,7 +599,7 @@ See [`docs/SUBMISSION.md`](./docs/SUBMISSION.md) for the full Devpost descriptio
 **Wiqi Lee**
 
 [![X](https://img.shields.io/badge/@wiqi__lee-000000?logo=x&logoColor=white)](https://x.com/wiqi_lee)
-[![GitHub](https://img.shields.io/badge/GitHub-wiqi--lee-181717?logo=github&logoColor=white)](https://github.com/wiqi-lee)
+[![GitHub](https://img.shields.io/badge/GitHub-wiqilee-181717?logo=github&logoColor=white)](https://github.com/wiqilee)
 
 Built solo for the Google Cloud Rapid Agent Hackathon 2026. If you want to talk about Phoenix, agentic AI, or CI/CD automation, find me on X.
 

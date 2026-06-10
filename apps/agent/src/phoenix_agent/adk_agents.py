@@ -22,6 +22,8 @@ Architecture:
 
 from __future__ import annotations
 
+import os
+
 import structlog
 from google.adk.agents import LlmAgent, SequentialAgent
 from google.adk.tools import FunctionTool
@@ -81,7 +83,21 @@ def make_gitlab_mcp_toolset() -> McpToolset:
     )
 
 
-gitlab_mcp = make_gitlab_mcp_toolset()
+gitlab_mcp: McpToolset | None
+if os.getenv("PHOENIX_DISABLE_MCP", "").strip() in {"1", "true", "TRUE", "yes"}:
+    # Local development escape hatch: skip the MCP OAuth handshake entirely
+    # and run on the REST fallback tools only. Set PHOENIX_DISABLE_MCP=1 in
+    # the root .env to chat with the agents in the ADK Dev UI without a
+    # GitLab Duo (Premium/Ultimate) account. Leave UNSET in production.
+    gitlab_mcp = None
+    log.warning("PHOENIX_DISABLE_MCP is set - GitLab MCP toolset disabled, using REST fallback tools only")
+else:
+    gitlab_mcp = make_gitlab_mcp_toolset()
+
+
+def _tools(*items):
+    """Build a tool list, silently dropping disabled (None) toolsets."""
+    return [t for t in items if t is not None]
 
 
 # ---------------------------------------------------------------------------
@@ -123,12 +139,12 @@ diagnostician_agent = LlmAgent(
     model=settings.gemini_model,
     description="Classifies CI/CD pipeline failures by root cause",
     instruction=DIAGNOSTICIAN_INSTRUCTION,
-    tools=[
+    tools=_tools(
         gitlab_mcp,  # MCP: get_pipeline_jobs, get_merge_request_diffs, search...
         FunctionTool(func=fetch_job_log),  # REST gap: raw job trace
         FunctionTool(func=fetch_commit_diff),  # REST gap: commit file list
         FunctionTool(func=extract_error_signature),
-    ],
+    ),
     output_key="diagnosis",
 )
 
@@ -209,11 +225,11 @@ executor_agent = LlmAgent(
     model=settings.gemini_model,
     description="Applies repair strategies and opens merge requests",
     instruction=EXECUTOR_INSTRUCTION,
-    tools=[
+    tools=_tools(
         FunctionTool(func=apply_fix_in_sandbox),  # REST: branch + commit real fix
         FunctionTool(func=trigger_verification_pipeline),  # REST: trigger CI
         gitlab_mcp,  # MCP: create_merge_request (partner write path)
-    ],
+    ),
     output_key="execution_result",
 )
 
